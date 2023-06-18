@@ -1,11 +1,15 @@
-set -xe
+#!/bin/bash
 
-if [ $TRAVIS_BRANCH == 'master' ] ; then
-  eval "$(ssh-agent -s)"
-  ssh-add ~/.ssh/id_rsa
+# Set variables
+USER="root"
+HOST="137.184.160.164"
+DIR="/home/travis/demo"  # Destination directory on the Droplet
 
-  rsync -anv --exclude={'/node_modules','/src','/public'} ./ travis@137.184.160.164:/home/travis/demo/client
- 
-else
-  echo "Not deploying, since the branch isn't master."
-fi
+# SSH into the Droplet and copy the build files
+ssh -o StrictHostKeyChecking=no $USER@$HOST "mkdir -p $DIR"
+scp -o StrictHostKeyChecking=no -r build/* $USER@$HOST:$DIR
+
+# Additional commands, if needed
+# ...
+
+echo "Deployment completed successfully"
