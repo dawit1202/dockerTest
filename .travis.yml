@@ -1,7 +1,7 @@
 language: minimal
 addons:
   ssh_known_hosts:
-    - 137.184.160.164
+  - 137.184.160.164
 services:
 - docker
 env:
