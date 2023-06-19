@@ -12,11 +12,6 @@ before_install:
 - chmod 600 travis_rsa
 - mv travis_rsa ~/.ssh/id_rsa
 - cd .
-- sudo rm /usr/local/bin/docker-compose
-- curl -L "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-$(uname
-  -s)-$(uname -m)" -o docker-compose
-- chmod +x docker-compose
-- sudo mv docker-compose /usr/local/bin
 script:
 - docker-compose up -d --build
 deploy:
