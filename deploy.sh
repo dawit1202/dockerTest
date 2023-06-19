@@ -3,7 +3,7 @@
 # Set variables
 USER="root"
 HOST="137.184.160.164"
-DIR="/home/travis/demo"  # Destination directory on the Droplet
+DIR="/var/www/html"  # Destination directory on the Droplet
 
 # SSH into the Droplet and copy the build files
 ssh -o StrictHostKeyChecking=no $USER@$HOST "mkdir -p $DIR"
