@@ -1,0 +1,15 @@
+langauge: generic
+sudo: required
+addons:
+  ssh_known_hosts: 137.184.160.164
+services:
+- docker
+before_install:
+- docker build -t ldawit/docker-react  -f Dockerfile.dev .
+script:
+- docker run -e CI=true ldawit/docker-react npm run test
+deploy:
+  provider: script
+  script: bash deploy.sh
+  on:
+    branch: master
