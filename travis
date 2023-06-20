@@ -12,7 +12,7 @@ services:
 # Build and deploy script
 script:
   - docker build -t ldawit/docker-react -f Dockerfile.dev .
-  - docker login -u "ldawit" -p "!1Leah409"
+  - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
   - docker push ldawit/docker-react
 
 # Deploy to DigitalOcean
