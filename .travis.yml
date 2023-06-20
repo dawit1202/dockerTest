@@ -1,23 +1,22 @@
-language: generic
-
-# Specify the branches to build on Travis CI
-branches:
-  only:
-    - master
-
-# Define the services to run
+language: minimal
+sudo: required
+addons:
+  ssh_known_hosts:
+  - 137.184.160.164
 services:
-  - docker
-
-# Build and deploy script
+- docker
+before_install:
+- openssl aes-256-cbc -K $encrypted_0ddd2445e49f_key -iv $encrypted_0ddd2445e49f_iv
+  -in travis_rsa.enc -out travis_rsa -d
+- chmod 600 travis_rsa
+- mv travis_rsa ~/.ssh/id_rsa
+- cd .
+- docker build -t ldawit/docker-react -f Dockerfile.dev .
 script:
-  - docker build -t ldawit/docker-react -f Dockerfile.dev .
-  - docker login -u "ldawit" -p "!1Leah409"
-  - docker push ldawit/docker-react
-
-# Deploy to DigitalOcean
+- docker run -e CI=true ldawit/docker-react npm run test -- --coverage --watchAll=false
+- docker-compose up -d --build
 deploy:
   provider: script
   script: bash deploy.sh
   on:
-    branch: main
+    branch: master

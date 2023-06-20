@@ -1,0 +1,23 @@
+language: generic
+
+# Specify the branches to build on Travis CI
+branches:
+  only:
+    - master
+
+# Define the services to run
+services:
+  - docker
+
+# Build and deploy script
+script:
+  - docker build -t ldawit/docker-react -f Dockerfile.dev .
+  - docker login -u "ldawit" -p "!1Leah409"
+  - docker push ldawit/docker-react
+
+# Deploy to DigitalOcean
+deploy:
+  provider: script
+  script: bash deploy.sh
+  on:
+    branch: main
