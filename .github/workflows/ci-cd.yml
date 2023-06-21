@@ -30,6 +30,6 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.DIGITALOCEAN_SSH_PRIVATE_KEY }}
       - name: Copy files to remote server
-        run: scp -i ${{ secrets.DIGITALOCEAN_SSH_PRIVATE_KEY }} ./docker-compose.prod.yaml ${{ secrets.DIGITALOCEAN_SSH_USERNAME }}@${{ secrets.DIGITALOCEAN_HOST_IP }}:/root
+        run: scp -i ${{ secrets.DIGITALOCEAN_SSH_PRIVATE_KEY }} ./docker-compose.prod.yaml ${{ secrets.DIGITALOCEAN_SSH_USERNAME }}@${{ secrets.DIGITALOCEAN_HOST_IP }}:/
       - name: docker-compose
-        run: ssh -i ${{ secrets.DIGITALOCEAN_SSH_PRIVATE_KEY }} ${{ secrets.DIGITALOCEAN_SSH_USERNAME }}@${{ secrets.DIGITALOCEAN_HOST_IP }} 'cd /root && docker-compose -f docker-compose.prod.yaml up -d'  
+        run: ssh -i ${{ secrets.DIGITALOCEAN_SSH_PRIVATE_KEY }} ${{ secrets.DIGITALOCEAN_SSH_USERNAME }}@${{ secrets.DIGITALOCEAN_HOST_IP }} 'cd / && docker-compose -f docker-compose.prod.yaml up -d'  
