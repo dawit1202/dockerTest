@@ -1,0 +1,27 @@
+name: release-publish
+env:
+  REGISTRY: "registry.digitalocean.com/docker-react"
+  SERVICE: "docker-react"
+  NAMESPACE: "test"
+# dop_v1_07461b82b270cb72ee202fb8056c2cad1ea133b7d05ab597dae414018dccd7c9
+on:
+  release:
+    types: [published]
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+     - name: env output
+       run: echo ${{ github.event.release.tag_name }}
+     - uses: actions/checkout@v2
+       name: git checkout
+     - name: Build the Docker image
+       run: docker build . --file Dockerfile --tag $REGISTRY/$SERVICE:${{ github.event.release.tag_name }}
+     - name: Install doctl
+       uses: digitalocean/action-doctl@v2
+       with:
+         token: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+     - name: Log in to DigitalOcean Container Registry with short-lived credentials
+       run: doctl registry login --expiry-seconds 600
+     - name: Push image to DigitalOcean Container Registry
+       run: docker push $REGISTRY/$SERVICE:${{ github.event.release.tag_name }}
