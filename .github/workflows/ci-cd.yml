@@ -15,16 +15,18 @@ jobs:
         run: echo ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
       - uses: actions/checkout@v2
         name: git checkout
-      # - name: Build the Docker image
-      #   run: docker build . --file Dockerfile --tag $REGISTRY/$SERVICE:${{ github.event.release.tag_name }}
-      # - name: Install doctl
-      #   uses: digitalocean/action-doctl@v2
-      #   with:
-      #     token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-      # - name: Log in to DigitalOcean Container Registry with short-lived credentials
-      #   run: doctl registry login --expiry-seconds 600
-      # - name: Push image to DigitalOcean Container Registry
-      #   run: docker push $REGISTRY/$SERVICE:${{ github.event.release.tag_name }}
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag $REGISTRY/$SERVICE:${{ github.event.release.tag_name }}
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      - name: Log in to DigitalOcean Container Registry with short-lived credentials
+        run: doctl registry login --expiry-seconds 600
+      - name: Push image to DigitalOcean Container Registry
+        run: |
+          docker push $REGISTRY/$SERVICE:${{ github.event.release.tag_name }}
+          docker push $REGISTRY/$SERVICE:latest
       - name: update docker-compose.prod in digitalocean droplet
         uses: webfactory/ssh-agent@v0.5.1
         with:
