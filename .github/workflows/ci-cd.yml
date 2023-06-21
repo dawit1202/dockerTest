@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: env output
-        run: echo ${{ github.event.release.tag_name }}
+        run: echo ${{ secrets.DOCKER_ACCESS_TOKEN }}
       - uses: actions/checkout@v2
         name: git checkout
       - name: Build the Docker image
