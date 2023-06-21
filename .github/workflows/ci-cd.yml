@@ -31,6 +31,6 @@ jobs:
           ssh-private-key: |
             ${{ secrets.DIGITALOCEAN_SSH_PRIVATE_KEY }}
       - name: Copy files to remote server
-        run: scp ./docker-compose.prod.yaml ${{ secrets.DIGITALOCEAN_SSH_USERNAME }}@${{ secrets.DIGITALOCEAN_HOST_IP }}:/
+        run: scp -r -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ./docker-compose.prod.yaml ${{ secrets.DIGITALOCEAN_SSH_USERNAME }}@${{ secrets.DIGITALOCEAN_HOST_IP }}:/
       - name: docker-compose
         run: ssh ${{ secrets.DIGITALOCEAN_SSH_USERNAME }}@${{ secrets.DIGITALOCEAN_HOST_IP }} 'cd / && docker-compose -f docker-compose.prod.yaml up -d'  
