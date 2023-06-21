@@ -15,8 +15,8 @@ jobs:
         run: echo ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
       - uses: actions/checkout@v2
         name: git checkout
-      - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag $REGISTRY/$SERVICE:${{ github.event.release.tag_name }}
+      # - name: Build the Docker image
+      #   run: docker build . --file Dockerfile --tag $REGISTRY/$SERVICE:${{ github.event.release.tag_name }}
       # - name: Install doctl
       #   uses: digitalocean/action-doctl@v2
       #   with:
