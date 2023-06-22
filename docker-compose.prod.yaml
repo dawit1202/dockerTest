@@ -1,5 +1,6 @@
 services:
-  api:
+  frontend :
     image: registry.digitalocean.com/docker-react/docker-react:latest
     ports:
       - "80:80"
+  
